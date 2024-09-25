@@ -21,7 +21,11 @@ void compare_files(FILE *fileA, FILE *fileB) {
     char line[MAX_LINE_LENGTH];
 
     // Print lines that exist in file A but not in file B
-    printf("Lines in A but not in B:\n");
+    printf("******************************\n");
+    printf("**                          **\n");
+    printf("** Lines in A but not in B: **\n");
+    printf("**                          **\n");
+    printf("******************************\n");
     rewind(fileA);
     while (fgets(line, MAX_LINE_LENGTH, fileA)) {
         if (!line_exists(fileB, line)) {
@@ -30,7 +34,11 @@ void compare_files(FILE *fileA, FILE *fileB) {
     }
 
     // Print lines that exist in file B but not in file A
-    printf("\nLines in B but not in A:\n");
+    printf("\n******************************\n");
+    printf("**                          **\n");
+    printf("** Lines in B but not in A: **\n");
+    printf("**                          **\n");
+    printf("******************************\n");
     rewind(fileB);
     while (fgets(line, MAX_LINE_LENGTH, fileB)) {
         if (!line_exists(fileA, line)) {
