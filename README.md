@@ -16,7 +16,7 @@ The ouput it produces is Lines that exist in A but not in B and vice versa. It d
 
 It allows me to see at a glance what has been added or is missing amongst over 4000 possible configuration options.
 
-Copy each .config into the same folder as `shredos_config_compare` renaming a A.txt and B.txt. then run the program `./shredos_config_compare`.
+Before using the .config files makesure you run make shredos_defconfig so that .config is updated. Then copy each .config into the same folder as `shredos_config_compare` renaming a A.txt and B.txt. then run the program `./shredos_config_compare`.
 
 Example output shown below
 
