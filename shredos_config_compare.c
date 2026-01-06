@@ -17,15 +17,15 @@ int line_exists(FILE *file, const char *line) {
 }
 
 // Function to compare files A and B
-void compare_files(FILE *fileA, FILE *fileB) {
+void compare_files(FILE *fileA, FILE *fileB, char *argv[]) {
     char line[MAX_LINE_LENGTH];
 
     // Print lines that exist in file A but not in file B
-    printf("******************************\n");
-    printf("**                          **\n");
-    printf("** Lines in A but not in B: **\n");
-    printf("**                          **\n");
-    printf("******************************\n");
+    printf("****************************************************************\n");
+    printf("**                                                            **\n");
+    printf("** Lines in %s but not in %s:                                 **\n", argv[1], argv[2]);
+    printf("**                                                            **\n");
+    printf("****************************************************************\n");
     rewind(fileA);
     while (fgets(line, MAX_LINE_LENGTH, fileA)) {
         if (!line_exists(fileB, line)) {
@@ -34,11 +34,11 @@ void compare_files(FILE *fileA, FILE *fileB) {
     }
 
     // Print lines that exist in file B but not in file A
-    printf("\n******************************\n");
-    printf("**                          **\n");
-    printf("** Lines in B but not in A: **\n");
-    printf("**                          **\n");
-    printf("******************************\n");
+    printf("****************************************************************\n");
+    printf("**                                                            **\n");
+    printf("** Lines in %s but not in %s:                                 **\n", argv[2], argv[1]);
+    printf("**                                                            **\n");
+    printf("****************************************************************\n");
     rewind(fileB);
     while (fgets(line, MAX_LINE_LENGTH, fileB)) {
         if (!line_exists(fileA, line)) {
@@ -47,20 +47,30 @@ void compare_files(FILE *fileA, FILE *fileB) {
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     FILE *fileA, *fileB;
 
-    // Open the files
-    fileA = fopen("A.txt", "r");
-    fileB = fopen("B.txt", "r");
+    if (argc != 3) {
+        fprintf(stderr, "Displays lines in first file but not in second and vice versa\n");
+        fprintf(stderr, "Usage: %s <fileA> <fileB>\n", argv[0]);
+        return 1;
+    }
 
-    if (fileA == NULL || fileB == NULL) {
-        printf("Error opening files.\n");
+    fileA = fopen(argv[1], "r");
+    if (fileA == NULL) {
+        perror(argv[1]);
+        return 1;
+    }
+
+    fileB = fopen(argv[2], "r");
+    if (fileB == NULL) {
+        perror(argv[2]);
+        fclose(fileA);
         return 1;
     }
 
     // Compare the two files
-    compare_files(fileA, fileB);
+    compare_files(fileA, fileB, argv);
 
     // Close the files
     fclose(fileA);
